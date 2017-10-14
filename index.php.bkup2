@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!-- This document was created by Professor Wergeles on February 7, 2017-->
+
+<!-- Main purpose: to show you HTML forms, proper usage, and sytax. 
+		The HTML <form> element defines a form that is used to collect user input --> 
+
+<!-- References: 
+
+    1) http://www.w3schools.com/html/html_forms.asp
+    2) http://www.w3schools.com/html/html_form_elements.asp
+    3) http://www.w3schools.com/html/html_form_input_types.asp
+    4) http://www.w3schools.com/html/html_form_attributes.asp
+
+-->
+<html>
+    <head>
+<!--  I USE BOOTSTRAP BECAUSE IT MAKES FORMATTING/LIFE EASIER -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"><!-- Optional theme -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!-- Latest compiled and minified JavaScript -->
+        <meta charset="utf-8">
+        <title>HTML Form Elements</title>
+        <style>
+          
+            form {
+                border: 1px solid pink;
+            }
+          
+        </style>
+    </head>
+    <body>
+        <!-- NOTE: usually the form is not visible to the user -->
+        
+        <!-- Note: usually the form-data will be sent to a php file -->
+        
+        <!-- Action = specifies where the data will go -->
+        
+        <!-- Method = is the way it gets there (passed, sent, etc.) -->
+        
+        <!-- action="#" makes it go to the same page that you are currently on. -->
+        <form action="#" method="post">
+        
+            <!-- Text Input -->
+            <div>
+                <label for="user">Username:</label>
+                <!-- placeholder is the default text in the text box. -->
+                <input id="user" type="text" name="username" placeholder="Username" maxlength="10">
+            </div>
+            
+            <hr>
+            <!-- The fact that the form itself is not visible is likely to be a test question. -->
+            <p class="center">Note that the form itself is not visible.</p>
+
+            <!-- Likely to be a test question as well -->
+            <p class="center">Also note that the default width of a text input field is 20 characters.</p>
+            <hr>
+            
+            <!-- password input -->
+            <div>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password" autofocus>
+            </div>
+           
+            
+            <hr>
+            <!-- all of these are important to remember -->
+            <p>Each input field must have a name attribute to be submitted.</p>
+            <p>If the name attribute is omitted, the data of that input field will not be sent at all.</p>
+            
+            <hr>
+            
+            <h3>What is your favorite dinosaur?</h3>
+            <div>
+                <input id="raptor" type="radio" name="dinosaurs" value="velociraptor" checked>
+                <label for="raptor">Velociraptor</label>
+            </div>
+            <div>
+                <input id="iguanadon" type="radio" name="dinosaurs" value="iguanadon">
+                <label for="iguanadon">Iguanadon</label>
+            </div>
+            <div>
+                <!-- put the label on the left by putting it first. Important to remember! -->
+                <label for="trex">T-Rex</label>
+                <input id="trex" type="radio" name="dinosaurs" value="trex">
+            </div>
+            
+            <!-- checkboxes -->
+            <h3>What are your interests?</h3>
+            <div>
+                <input id="coding" type="checkbox" name="interests[]" value="coding" checked>
+                <label for="coding">Coding</label>
+                
+                <br>
+                
+                <input id="sleeping" type="checkbox" name="interests[]" value="sleeping" checked>
+                <label for="sleeping">Sleeping</label>
+                
+                <br>
+                
+                <input id="wakeboarding" type="checkbox" name="interests[]" value="wakeboarding">
+                <label for="wakeboarding">Wake Boarding</label>
+                
+                <br>
+                
+                <label for="skating">Skating</label>
+                <input id="skating" type="checkbox" name="interests[]" value="skating">
+                
+                <br>
+                
+                <label for="drums">Drums and Percussion</label>
+                <input id="drums" type="checkbox" name="interests[]" value="drums">
+            </div>
+            
+            <!-- Multiple Select, select is referred to as a drop-down list -->
+            <h3>What do you like to eat?</h3>
+            <select name="foods[]" multiple>
+                <option value="">Please select</option>
+                <option value="pizza">Pizza</option>
+                <option value="padthai">Pad Thai</option>
+                <option value="baozi">BaoZi</option>
+                <option value="avocado">Avocado</option>
+                <option value="chili">Chili</option>
+            </select>
+            
+            <!-- The divs above are used to separate the radio buttons and check boxes. Without the div, they don't necessarily create a new line or separate from one another. -->
+            <!-- Button -->
+            <div>
+                <p>This is a clickable button to do some action</p>
+                <button type="button" onclick="alert('Hello World!')">Click Me!</button>
+            </div>
+            
+            <!-- TextArea -->
+            <h3>Comments?</h3>
+            <div>
+                <textarea name="comments" rows="20" cols="40">I like CS2830 ... but I think my instructor is weird!</textarea>
+            </div>
+            
+            <br><br>
+            
+            <!-- The <fieldset> element is used to group related data in a form
+
+                The <legend> element defines a caption for the <fieldset> element.
+            -->
+            <fieldset>
+                <legend>Personal Information: </legend>
+                <div>
+                    <label for="fname">First Name:</label>
+                    <input id="fname" type="text" name="firstname" placeholder="first name" autocomplete="on">
+                </div>
+                <div>
+                    <label for="phoneNumber">Phone:</label>
+                    <input id="phoneNumber" type="text" name="phoneNumber">
+                </div>
+            </fieldset>
+            
+            
+            
+            
+            <!-- The <datalist> tag specifies a list of pre-define options for an <input> element. -->
+            <p>This is a datalist: </p>
+            <input list="browsers">
+                <datalist id="browsers">
+                    <option value="Internet Explorer"></option>
+                    <option value="Firefox"></option>
+                    <option value="Chrome"></option>
+                    <option value="Opera"></option>
+                    <option value="Safari"></option>
+                    <option value="Fireworks">Fire</option>
+                    <option value="Siri">siri</option>
+                    
+                </datalist>
+            
+            <br><br>
+            
+            <!-- Submit button -->
+            <div>
+                <input type="submit" value="Submit">
+                <!-- <input type="submit"> defines a button for submitting the form data to a form-handler (PHP in this class, can be other things but for this class we will be using PHP.)
+
+                The form-handler is typically a server page with a script for processing input data.
+
+                The form-handler is specified in the forms action attribute.
+
+                form attributes:
+                action -> where
+                method -> how
+
+                Will need two forms for the final project!!!
+            -->
+            
+            </div>
+            
+        </form>
+            
+        <!-- OTHER FORM ELEMENTS WILL BE POSTED ONLINE, AS WE WILL NOT HAVE ENOUGH TIME TO GO OVER THEM IN CLASS! -->
+           
+           
+            
+
+            
+
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <br><br>
+            
+            
+            
+
+            
+            
+            
+
+            
+            
+
+        
+        <br>
+        <hr>
+        <br>
+        
+        <!-- Reference:
+        
+        http://www.w3schools.com/jsref/event_oninput.asp
+        -->
+        
+        
+        <br>
+        <hr>
+        <br>
+        
+        
+   
+        <p>Depending on browser support:<br>A color picker can pop-up when you enter the input field.</p>
+        
+        <br>
+        <hr>
+        <br>
+        <br>
+
+        
+
+        <p><b>Note:</b> type="color" is not supported in Internet Explorer / Edge.</p>
+
+        <p>Depending on browser support:<br>A date picker can pop-up when you enter the input field.</p>
+
+        <br>
+        <hr>
+        <br>
+        <br>
+        
+        
+
+        <p><strong>Note:</strong> type="time" is not supported in Firefox, or Internet 
+        	Explorer 10 and earlier versions.</p>
+        
+        <br>
+        <hr>
+        <br>
+        <br>
+        
+        
+    
+        
+        <br>
+        <hr>
+        <br>
+        <br>
+        
+        
+        
+        <p>Fill in and submit the form, then reload the page to see how autocomplete works.</p>
+        <p>Notice that autocomplete is "on" for the form, but "off" for the e-mail field.</p>
+        
+    </body>
+</html>
