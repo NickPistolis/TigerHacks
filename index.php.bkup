@@ -1,0 +1,63 @@
+<?php
+    include "../secure/database.php";
+    //echo "Got here!";
+    //$mysqli = new mysqli(HOST, USERNAME, PASSWORD, DBNAME);
+    $mysqli = new mysqli('172.31.29.248', 'webserver', 'password', 'ourdatabase');
+    if($mysqli->connect_errno){
+        echo "Connection failed on line 5";
+        exit();
+    }
+    else {
+	echo "Connection successful";
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TigerHacks Project</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+    
+    <div>    
+      <form>
+  First name:<br>
+  <input type="text" name="firstname"><br> 
+
+  
+  <select name="Major">
+  <option value="Engineering">Engineering</option>
+  <option value="Journalism">Journalism</option>
+  <option value="Business">Business</option>
+  <option value="Management">Management</option>
+  <option value="Communication">Communication</option>
+  <option value="Biological and Biomedical Sciences">Biological and Biomedical Sciences</option>
+  </select>
+    
+  <select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+    
+    <select name="Dorm">
+  <option value="Hatch">Hatch</option>
+  <option value="Gillett">Gillett</option>
+  <option value="Hudson">Hudson</option>
+  <option value="North/South">North/South</option>
+  <option value="Gateway">Gateway</option>
+  <option value="Off campus/Other">Off campus/Other</option>
+  </select>
+  
+  <input type="checkbox" name="Interest" value="Music">Music<br>
+  <input type="checkbox" name="Interest" value="Movies">Movies<br>
+  <input type="checkbox" name="Interest" value="TV Shows">TV Shows<br>
+  <input type="checkbox" name="Interest" value="Sports">Sports<br>
+  <input type="checkbox" name="Interest" value="Fashion">Fashion<br>
