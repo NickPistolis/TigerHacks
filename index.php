@@ -13,21 +13,15 @@
 <body bgcolor="#FFD700">
     <style>
         @import "compass/css3";
-
 // Font imports
-
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
-
 // Color vars
-
 $white: #fff;
 $grey: #ccc;
 $dark_grey: #555;
 $blue: #4f6fad;
 $pink: #ee9cb4;
-
 // Mixins
-
 @mixin lato-book { font-family: 'Lato', sans-serif; font-weight: 300; }
 @mixin lato-reg { font-family: 'Lato', sans-serif; font-weight: 400; }
 @mixin lato-bold { font-family: 'Lato', sans-serif; font-weight: 700; }
@@ -38,16 +32,11 @@ $pink: #ee9cb4;
       background-color: lighten($color, 5%);
     }
 }
-
 // Functions
-
 @function pxtoem($target, $context){
   @return ($target/$context)+0em;
 }
-
 //
-
-
 body {
 }
 div, textarea, input {
@@ -114,7 +103,6 @@ h3 {
         label{
             text-decoration-color: black;
         }
-
 form {
   max-width: 100%;
   display: block;
@@ -167,8 +155,6 @@ form {
     font-size: pxtoem(16, 16)
   }
     
-
-
 }
         
       
@@ -176,9 +162,7 @@ form {
         
         color:black;
     }
-
 // Media Queries
-
 @media only screen and (max-width:480px) {
   .pull-right {
     float: none; 
@@ -247,91 +231,6 @@ form {
     <script>
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
     </script>
-   <!--
-    <div>
-    <form action="" method="POST">
-        <!--<div class="input-field col s6">
-          <i class="material-icons prefix">account_circle</i>
-          <input id="icon_prefix" name="fname" type="text" class="validate">
-          <label for="icon_prefix">First Name</label>
-        </div>
-        <div class="input-field col s6">
-            <h3>Please enter your first name</h3>
-          <input placeholder="Enter your first name here" id="first_name" name="fname" type="text" class="validate" required>
-        </div>
-    
-            <h3>What are your interests?</h3>
-            <div >
-                <input id="coding" type="checkbox" name="coding" value="coding" checked>
-                <label for="coding">Coding</label>
-                
-                <br>
-                
-                <input id="sleeping" type="checkbox" name="sleeping" value="sleeping" checked>
-                <label for="sleeping">Sleeping</label>
-                
-                <br>
-                
-                <input id="Reading" type="checkbox" name="reading" value="Reading">
-                <label for="Reading">Reading</label>
-                
-                <br>
-                
-                
-                <input id="skating" type="checkbox" name="skating" value="skating">
-                <label for="skating">Skating</label>
-                
-                <br>
-                
-                
-                <input id="instrument " type="checkbox" name="instrument" value="instrument ">
-                <label for="instrument ">Playing an instrament </label>
-            </div>
-        
-            <h3>What is your major?</h3>
-        <div class="input-field col s12">
-    <select name="majors" required="required" class="validate" id="myForm">   
-      <option value="" disabled selected>Choose your option</option>
-      <option value="Engineering">Engineering</option>
-      <option value="Journalism">Journalism</option>
-      <option value="Business">Business</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Biological Science">Biological Science</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
-        
-        
-        <h3>What is your Dorm?</h3>
-  <div class="input-field col s12">
-    <select name="Dorms" required="required" class="validate" id="myForm">   
-      <option value="" disabled selected>Choose your option</option>
-      <option value="Hatch/Schurz">Hatch/Schurz</option>
-      <option value="Gillett/Hudson">Gillett/Hudson</option>
-      <option value="North/South">North/South</option>
-      <option value="Gateway">Gateway</option>
-      <option value="College Ave.">College Ave.</option>
-      <option value="Off Campus/other">Off Campus/other</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
-    
-    
-    <div class="input-field col s12">
-    <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
-    <i class="material-icons right">send</i>
-  </button>
-        
-    
-        </div>
-    
-    
-    
-    </form>
-        
-    </div>
--->
-
     
 <!-- Good Form starts here -->
     
@@ -353,12 +252,12 @@ form {
     <h3><strong>Fill out the form below to learn more!</strong></h3>
   </div>
   <div class="row body">
-    <form action="#">
+    <form action="" method="POST">
       <ul>
         
         <li>
           <p class="left">
-            <input type="text" name="last_name" placeholder="First Name" required/>
+            <input type="text" name="first_name" placeholder="First Name" required/>
           </p>
         </li>
           <li>
@@ -437,7 +336,7 @@ form {
         </li>       
         
         <li>
-          <input class="btn btn-submit" type="submit" value="Submit" />
+          <input class="btn btn-submit" type="submit" name="submit" value="submit"/>
         </li>
           
         
@@ -449,48 +348,288 @@ form {
     
 <!-- PHP starts here. Written by Andrew Krall -->
 <?php
+    
+    //Constants
+    const MULTIPLIERS = [
+        'major'=>10,
+        'dorm'=>15,
+        'coding'=>5,
+        'sleeping'=>5,
+        'reading'=>5,
+        'skating'=>5,
+        'instrument'=>5
+    ];
+    
     if(isset($_POST['submit'])){
 	$mysqli = new mysqli('172.31.29.248', 'webserver', 'password', 'ourdatabase');
-        echo "Got here!";
 	if ($mysqli->connect_errno) { //Terminate script if there is a connection error
-	    echo "Failed to connect to MySQLI on Line 5";
+	    echo "Failed to connect to MySQLI on Line 367";
 	    exit();
 	}
-        echo "Got here!";
-        $query = "INSERT INTO USERDATA VALUES(?,?,?)";
+        //If statement to convert the values of the checkbox into booleans
+        if(isset($_POST['coding'])) {
+            $coding = true;
+        }
+        else {
+            $coding = false;
+        }
+        if(isset($_POST['sleeping'])) {
+            $sleeping = true;
+        }
+        else {
+            $sleeping = false;
+        }
+        if(isset($_POST['reading'])) {
+            $reading = true;
+        }
+        else {
+            $reading = false;
+        }
+        if(isset($_POST['skating'])) {
+            $skating = true;
+        }
+        else {
+            $skating = false;
+        }
+        if(isset($_POST['instrument'])) {
+            $instrument = true;
+        }
+        else {
+            $instrument = false;
+        }
+        $query = "INSERT INTO USERDATA VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $mysqli->stmt_init();
         if(!$stmt->prepare($query)){
+            echo "Didn't prepare the statement properly";
             exit();
         }
-        $stmt->bind_param("sss", $_POST['fname'], $_POST['majors'],$_POST['Dorms']);
+        echo "<br>";
+        $fullname =  $_POST['first_name'] . $_POST['last_name'];
+        $stmt->bind_param("sssssssss", $_POST['Pawprint'], $fullname, $_POST['majors'],$_POST['Dorms'], $coding, $sleeping, $reading, $skating, $instrument);
         $stmt->execute();
-        $query2 = "INSERT INTO INTERESTS VALUES(?,?,?,?,?)";
+        
+        /*
+	    //Create majors array
+        $majors = array("Engineering", "Journalism", "Business", "Marketing", "Biological Science");
+        
+        //Create ratings array
+        $numStudents = 10;
+        for($i = 0; $i < numStudents; $i++) {
+            
+        }
+        for($i = 0; $i < sizeof($majors); $i++) {
+            echo $majors[$i];
+            echo "<br>";
+        }
+        
+        $name = "Andrew";
+        $sql = "select * from USERDATA where `name` LIKE '" . $name . "%'";
+        */
+        
+        //Query
+        /*
+        $query = 'with current_user as (
+            select major,residence from USERDATA where pawprint=?
+        )
+        SELECT
+            pawprint,
+            name,
+            (
+                textScore(c.major,u.major,?) +
+                textScore(c.residence,u.residence,?) +
+                boolScore(c.coding,u.coding,?) + 
+                boolScore(c.sleeping,u.sleeping,?) +
+                boolScore(c.reading,u.reading,?) +
+                boolScore(c.skating,u.skating,?) +
+                boolScore(c.instrument,u.instrument,?) 
+            ) AS score
+        FROM USERDATA u
+        LEFT JOIN current_user c ON true = true
+        WHERE u.name <> c.name 
+        ORDER BY score DESC
+        LIMIT ?
+        '; 
+        
+        'with current_user as (
+            select * from USERDATA where pawprint='ankwdf'
+        )'
+        
+        */
+
+        /* THIS IS EXACTLY WHAT WE WANT: */
+        
+        /* Binding parameters: 
+        
+        $query = "INSERT INTO USERDATA VALUES(?,?,?,?,?,?,?,?,?)";
         $stmt = $mysqli->stmt_init();
+        if(!$stmt->prepare($query)){
+            echo "Didn't prepare the statement properly";
+            exit();
+        }
+        echo $_POST['Pawprint'];
+        echo "<br>";
+        $fullname =  $_POST['first_name'] . $_POST['last_name'];
+        echo $fullname;
+        $stmt->bind_param("sssssssss", $_POST['Pawprint'], $fullname, $_POST['majors'],$_POST['Dorms'], $coding, $sleeping, $reading, $skating, $instrument);
+        echo $_POST['pawprint'];
+        echo "<br>";
+        echo $_POST['fname'] + $_POST['lname'];
+        $stmt->execute();
+        
+        */
+        
+        /* What works well:
+        
+        $query = 'SELECT
+            u.pawprint,
+            u.name,
+            (
+                textScore(c.major,u.major,10.2) +
+                textScore(c.residence,u.residence,16.4) +
+                boolScore(c.coding,u.coding,8.0) + 
+                boolScore(c.sleeping,u.sleeping,12.6) +
+                boolScore(c.reading,u.reading,22.4) +
+                boolScore(c.skating,u.skating,7.4) +
+                boolScore(c.instrument,u.instrument,15.1) 
+            ) AS score
+        FROM USERDATA u
+        LEFT JOIN 
+            (
+                SELECT * FROM USERDATA WHERE pawprint = "ankwdf" LIMIT 1
+            )
+        c ON true = true
+        WHERE u.name <> c.name 
+        ORDER BY score DESC
+        LIMIT 5
+        ';
+        
+        
+        echo MULTIPLIERS['major'];
+        echo MULTIPLIERS['dorm'];
+        echo MULTIPLIERS['coding'];
+        echo MULTIPLIERS['sleeping'];
+        echo MULTIPLIERS['reading'];
+        echo MULTIPLIERS['skating'];
+        echo MULTIPLIERS['instrument'];
+        
+        */
+        
+        //This is the full SQL statement we need to bind with constants and the pawprint name
+        $pawprint = $_POST['Pawprint'];
+        $query2 = 'SELECT
+            u.pawprint,
+            u.name,
+            (
+                textScore(c.major,u.major,' . MULTIPLIERS['major'] . ') +
+                textScore(c.residence,u.residence,' . MULTIPLIERS['dorm'] . ') +
+                boolScore(c.coding,u.coding,' . MULTIPLIERS['coding'] . ') + 
+                boolScore(c.sleeping,u.sleeping,' . MULTIPLIERS['sleeping'] . ') +
+                boolScore(c.reading,u.reading,' . MULTIPLIERS['reading'] . ') +
+                boolScore(c.skating,u.skating,' . MULTIPLIERS['skating'] . ') +
+                boolScore(c.instrument,u.instrument,' . MULTIPLIERS['instrument'] . ') 
+            ) AS score
+        FROM USERDATA u
+        LEFT JOIN 
+            (
+                SELECT * FROM USERDATA WHERE pawprint = "' . $pawprint . '" LIMIT 1
+            )
+        c ON true = true
+        WHERE u.name <> c.name 
+        ORDER BY score DESC
+        LIMIT 5
+        ';
+        /*
+        $query2 = 'SELECT
+            u.pawprint,
+            u.name,
+            (
+                textScore(c.major,u.major,10.2) +
+                textScore(c.residence,u.residence,16.4) +
+                boolScore(c.coding,u.coding,8.0) + 
+                boolScore(c.sleeping,u.sleeping,12.6) +
+                boolScore(c.reading,u.reading,22.4) +
+                boolScore(c.skating,u.skating,7.4) +
+                boolScore(c.instrument,u.instrument,15.1) 
+            ) AS score
+        FROM USERDATA u
+        LEFT JOIN 
+            (
+                SELECT * FROM USERDATA WHERE pawprint = "ankwdf" LIMIT 1
+            )
+        c ON true = true
+        WHERE u.name <> c.name 
+        ORDER BY score DESC
+        LIMIT 5
+        ';
+        */
+        
+        /* Constants: 
+        
+        const MULTIPLIERS = [
+        'major'=>0.5,
+        'dorm'=>0.25,
+        'coding'=>0.10, 
+        'sleeping'=>0.15,
+        'reading'=>0.08,
+        'skating'=>0.12,
+        'instrument'=>0.19
+    ];
+    
+        */
+        
+        //Need to bind the values to the prepared statement
+        /*$stmt = $mysqli->stmt_init();
         if(!$stmt->prepare($query2)){
+            echo "Didn't prepare the statement properly";
             exit();
         }
         echo "Got here!";
-        $stmt->bind_param("sssss", $_POST['coding'], $_POST['sleeping'], $_POST['reading'], $_POST['skating'], $_POST['instrument']);
-        $stmt->execute();
-        
-	/**
-	 * The big problem with my implementation of the search is that I am not using prepared statements.
-	 * For you lab, you will need to change this code to use prepared statements.
-	 */
-        $sql = "SELECT * FROM USERDATA;"; //where `major` LIKE '" . $_POST['majors'] . "%'
-        
-	$result = $mysqli->query($sql); //Execute query
-         while($row = $result->fetch_array(MYSQLI_NUM)){ //Fetch the results as a numeric array
-        echo "<tr>"; //Each element of the array is a row
+        echo MULTIPLIERS['major'];
+        echo MULTIPLIERS['dorm'];
+        echo MULTIPLIERS['coding'];
+        echo MULTIPLIERS['sleeping'];
+        echo MULTIPLIERS['reading'];
+        echo MULTIPLIERS['skating'];
+        echo MULTIPLIERS['instrument'];
+        echo $_POST['Pawprint'];
+        $pawprint = $_POST['Pawprint'] . '%';
+        echo $pawprint;
+        //$stmt2->bind_param("ddddddds", MULTIPLIERS['major'], MULTIPLIERS['dorm'], MULTIPLIERS['coding'], MULTIPLIERS['sleeping'], MULTIPLIERS['reading'], MULTIPLIERS['skating'], MULTIPLIERS['instrument'], $pawprint);
+        if(!$stmt->bind_param("ddddddds", 0.12, 15.2, 19.4, 26.2, 9.28, 0.42, 1.23, "aek193%")) {
+            echo "Binding parameter worked!";
+        }
+        else {
+            echo "Binding parameters did not work.";
+        }
+        if($stmt->execute()) {
+            echo "It worked!";
+        }
+        else {
+            echo "Execute didn't work";
+        }*/
+	    $result2 = $mysqli->query($query2); //Execute query
+        if(isset($result2) == false) {
+            echo "Result not set";
+        }
+        while($fieldInfo = mysqli_fetch_field($result2)){
+            echo "<th>". $fieldInfo->name. "</th>";
+            echo "<br>";
+        }
+         while($row2 = $result2->fetch_array(MYSQLI_ASSOC)){ //Fetch the results as a numeric array
+        //echo "<tr>"; //Each element of the array is a row
         /*
          * Each row's data is stored in an array
          * Iterate that array and place each value
          * into the table
          */
-        foreach($row as $r){
+        /*foreach($row as $r){
             echo "<td>" . $r . "</td>";
             echo "<br>";
-        }
+        }*/
+             foreach ($row2 as $key => $value) {
+                 echo "$key: $value";
+                 echo "<br>";
+             }
          }
     $mysqli->close(); //Close mysql connection
         
@@ -510,6 +649,27 @@ form {
     
     ?>
     
+    <script>
+  POST https://outlook.office.com/api/v2.0/me/sendmail
+
+{
+  "Message": {
+    "Subject": "HI mum?",
+    "Body": {
+      "ContentType": "Text",
+      "Content": "from Nick"
+    },
+    "ToRecipients": [
+      {
+        "EmailAddress": {
+          "Address": "nppg3c@mail.missouri.edu"
+        }
+      }
+    ]
+    
+    
+    </script>
+        
 
 
   
